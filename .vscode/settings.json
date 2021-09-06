@@ -41,5 +41,9 @@
     // This results in code completion suggesting words when editing comments and
     // strings. This setting will prevent that.
     "editor.wordBasedSuggestions": false
-  }
+  },
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#FF8A3D",
+    "titleBar.inactiveBackground": "#FF8A3D"
+    },
 }

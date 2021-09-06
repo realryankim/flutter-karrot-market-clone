@@ -1,3 +1,4 @@
+import 'package:carrot_market_clone/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +18,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Container(),
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => App()),
+      ],
     );
   }
 }
