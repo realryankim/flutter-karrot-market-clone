@@ -1,5 +1,9 @@
 import 'package:carrot_market_clone/controller/app_controller.dart';
+import 'package:carrot_market_clone/pages/chatting.dart';
 import 'package:carrot_market_clone/pages/home.dart';
+import 'package:carrot_market_clone/pages/nearby.dart';
+import 'package:carrot_market_clone/pages/neighborhoodLife.dart';
+import 'package:carrot_market_clone/pages/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -8,17 +12,22 @@ class App extends GetView<AppController> {
   const App({Key? key}) : super(key: key);
 
   Widget _bodyWidget() {
-    switch (controller.currentIndex.value) {
-      case 0:
+    switch (RouteName.values[controller.currentIndex.value]) {
+      case RouteName.HOME:
         return Home();
-      case 1:
-        return Container();
-      case 2:
-        return Container();
-      case 3:
-        return Container();
-      case 4:
-        return Container();
+        break;
+      case RouteName.NEIGHBORHOODLIFE:
+        return NeighborhoodLife();
+        break;
+      case RouteName.NEARBY:
+        return Nearby();
+        break;
+      case RouteName.CHATTING:
+        return Chatting();
+        break;
+      case RouteName.USER:
+        return User();
+        break;
     }
     return Container();
   }
@@ -41,46 +50,11 @@ class App extends GetView<AppController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: GestureDetector(
-      //     onTap: () {
-      //       print('다른 지역');
-      //     },
-      //     child: Row(
-      //       children: [
-      //         Text('아라동'),
-      //         Icon(Icons.keyboard_arrow_down_rounded),
-      //       ],
-      //     ),
-      //   ),
-      //   elevation: 1.0,
-      //   actions: [
-      //     IconButton(
-      //       onPressed: () {
-      //         print('상품 검색');
-      //       },
-      //       icon: Icon(Icons.search),
-      //     ),
-      //     IconButton(
-      //       onPressed: () {
-      //         print('카테고리');
-      //       },
-      //       icon: Icon(Icons.tune),
-      //     ),
-      //     IconButton(
-      //       onPressed: () {
-      //         print('알림');
-      //       },
-      //       icon: SvgPicture.asset(
-      //         'assets/svg/bell.svg',
-      //         width: 22,
-      //       ),
-      //     ),
-      //   ],
-      // ),
-      body: Obx(() {
-        return _bodyWidget();
-      }),
+      body: Obx(
+        () {
+          return _bodyWidget();
+        },
+      ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
