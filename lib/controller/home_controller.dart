@@ -9,14 +9,20 @@ class HomeController extends GetxController {
     'ora': '오라동',
     'setting_neighborhood': '내 동네 설정하기',
   };
+  late ContentsRepository contentsRepository;
 
   @override
   void onInit() {
     changeLocation('ara');
+    contentsRepository = ContentsRepository();
     super.onInit();
   }
 
   void changeLocation(String location) {
     currentLocation!(location);
+  }
+
+  Future<List<Map<String, dynamic>>> loadContents() {
+    return contentsRepository.loadContentsFromLocation(currentLocation!.value);
   }
 }

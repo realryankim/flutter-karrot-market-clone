@@ -8,7 +8,8 @@ class Home extends StatelessWidget {
 
   final HomeController controller = Get.put(HomeController());
 
-  Widget _bodyWidget() {
+  Widget _makeDataList(List<Map<String, dynamic>> datas) {
+    print(datas);
     return ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         itemBuilder: (BuildContext _context, int index) {
@@ -21,7 +22,7 @@ class Home extends StatelessWidget {
                     Radius.circular(10.0),
                   ),
                   child: Image.asset(
-                    'assets/images/ara-1.jpg',
+                    datas[index]['image'],
                     width: 100,
                     height: 100,
                   ),
@@ -34,13 +35,21 @@ class Home extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '운동화',
+                          datas[index]['title'],
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 15.0),
                         ),
                         SizedBox(height: 5.0),
                         Text(
-                          '500',
+                          datas[index]['location'],
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 12.0,
+                              color: Colors.black.withOpacity(0.3)),
+                        ),
+                        SizedBox(height: 5.0),
+                        Text(
+                          datas[index]['price'],
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         Expanded(
@@ -55,7 +64,7 @@ class Home extends StatelessWidget {
                                   height: 13,
                                 ),
                                 SizedBox(width: 5.0),
-                                Text('20'),
+                                Text(datas[index]['likes']),
                               ],
                             ),
                           ),
@@ -71,7 +80,27 @@ class Home extends StatelessWidget {
         separatorBuilder: (BuildContext _context, int index) {
           return Container(height: 1, color: Colors.black.withOpacity(0.4));
         },
-        itemCount: 10);
+        itemCount: datas.length);
+  }
+
+  Widget _bodyWidget() {
+    return FutureBuilder(
+        future: controller.loadContents(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text('데이터 오류'));
+          }
+          if (snapshot.hasData) {
+            // AsyncSnapshot<Object?>을 List<Map<String, dynamic>>로 형변환
+            return _makeDataList(snapshot.data as List<Map<String, dynamic>>);
+          }
+          return Center(
+            child: Text('해당 지역에 데이터가 없습니다.'),
+          );
+        });
   }
 
   @override
