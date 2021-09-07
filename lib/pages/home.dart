@@ -1,4 +1,5 @@
 import 'package:carrot_market_clone/controller/home_controller.dart';
+import 'package:carrot_market_clone/utils/data_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,6 @@ class Home extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
 
   Widget _makeDataList(List<Map<String, dynamic>> datas) {
-    print(datas);
     return ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         itemBuilder: (BuildContext _context, int index) {
@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
                         ),
                         SizedBox(height: 5.0),
                         Text(
-                          datas[index]['price'],
+                          DataUtils.calcStringToWon(datas[index]['price']),
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         Expanded(
