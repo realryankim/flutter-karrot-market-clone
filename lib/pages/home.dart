@@ -1,4 +1,4 @@
-import 'package:carrot_market_clone/components/product_detail.dart';
+import 'package:carrot_market_clone/pages/product_detail.dart';
 import 'package:carrot_market_clone/controller/home_controller.dart';
 import 'package:carrot_market_clone/utils/data_utils.dart';
 import 'package:flutter/material.dart';

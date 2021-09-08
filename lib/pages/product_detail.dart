@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carrot_market_clone/components/manner_temperature.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +29,7 @@ class _ProductDetailState extends State<ProductDetail> {
     super.didChangeDependencies();
   }
 
-  Widget _bodyWidget() {
+  Widget _makeSliderImage() {
     return Container(
       child: Stack(
         children: [
@@ -87,6 +88,60 @@ class _ProductDetailState extends State<ProductDetail> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _sellerSimpleInfo() {
+    return Container(
+      padding: EdgeInsets.all(15.0),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 20.0,
+            backgroundImage: Image.asset('assets/images/user.png').image,
+          ),
+          SizedBox(width: 10.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Ryan',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                ),
+              ),
+              Text(
+                '서초구 서초1동',
+                style: TextStyle(
+                  fontSize: 12.0,
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: MannerTemperature(
+              mannerTemp: 39.6,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _bodyWidget() {
+    return Column(
+      children: [
+        _makeSliderImage(),
+        _sellerSimpleInfo(),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          child: Divider(
+            height: 5.0,
+            color: Colors.grey.shade400,
+          ),
+        ),
+      ],
     );
   }
 
