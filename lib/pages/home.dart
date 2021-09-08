@@ -16,9 +16,11 @@ class Home extends StatelessWidget {
         itemBuilder: (BuildContext _context, int index) {
           return GestureDetector(
             onTap: () {
-              Get.to(ProductDetail(
-                data: datas[index],
-              ));
+              Get.to(
+                () => ProductDetail(
+                  data: datas[index],
+                ),
+              );
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 10.0),
