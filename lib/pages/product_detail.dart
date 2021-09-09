@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_market_clone/components/manner_temperature.dart';
+import 'package:carrot_market_clone/components/other_selling_content_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -129,18 +130,135 @@ class _ProductDetailState extends State<ProductDetail> {
     );
   }
 
+  Widget _line() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      child: Divider(
+        height: 5.0,
+        color: Colors.grey.shade400,
+      ),
+    );
+  }
+
+  Widget _contentDetail() {
+    return Container(
+      padding: EdgeInsets.all(15.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            widget.data!['title'],
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0,
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Row(
+            children: [
+              Text(
+                '디지털기기',
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  fontSize: 11.0,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              Text(
+                ' · 끌올 2주 전',
+                style: TextStyle(
+                  fontSize: 11.0,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 15.0),
+          Text(
+            '2018 베스트 부츠 고급형 팝니다. 거의 새 거\n두 번 신었어요\n코로나로 인해 택배 거래만 가능합니다',
+            style: TextStyle(
+              fontSize: 15.0,
+              height: 1.5,
+            ),
+          ),
+          SizedBox(height: 15.0),
+          Text(
+            '채팅 3 · 관심 17 · 조회 295',
+            style: TextStyle(
+              fontSize: 12.0,
+              color: Colors.grey,
+            ),
+          ),
+          SizedBox(height: 15.0),
+        ],
+      ),
+    );
+  }
+
+  Widget _reportButton() {
+    return Container(
+      margin: EdgeInsets.all(15.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          GestureDetector(
+            onTap: () {
+              print('report');
+            },
+            child: Text(
+              '이 게시글 신고하기',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 17.0,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _otherSellingContent() {
+    return Container(
+      padding: EdgeInsets.all(15.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Ryan님의 판매 상품',
+            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            '더보기',
+            style: TextStyle(
+              fontSize: 15.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _bodyWidget() {
-    return Column(
-      children: [
-        _makeSliderImage(),
-        _sellerSimpleInfo(),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.0),
-          child: Divider(
-            height: 5.0,
-            color: Colors.grey.shade400,
+    return CustomScrollView(
+      slivers: [
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              _makeSliderImage(),
+              _sellerSimpleInfo(),
+              _line(),
+              _contentDetail(),
+              _line(),
+              _reportButton(),
+              _line(),
+              _otherSellingContent(),
+            ],
           ),
         ),
+        OtherSellingContentList(),
       ],
     );
   }

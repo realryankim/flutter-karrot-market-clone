@@ -92,7 +92,7 @@ class Home extends StatelessWidget {
           );
         },
         separatorBuilder: (BuildContext _context, int index) {
-          return Container(height: 1, color: Colors.black.withOpacity(0.4));
+          return Container(height: 1, color: Colors.black.withOpacity(0.1));
         },
         itemCount: datas.length);
   }
