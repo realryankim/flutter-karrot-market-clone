@@ -2,10 +2,10 @@ import 'package:get/get.dart';
 
 enum RouteName {
   HOME,
-  NEIGHBORHOODLIFE,
+  MYLOCAL,
   NEARBY,
-  CHATTING,
-  USER,
+  CHATS,
+  MYKARROT,
 }
 
 class AppController extends GetxService {

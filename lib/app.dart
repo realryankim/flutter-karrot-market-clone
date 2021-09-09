@@ -1,9 +1,9 @@
 import 'package:carrot_market_clone/controller/app_controller.dart';
-import 'package:carrot_market_clone/pages/chatting.dart';
+import 'package:carrot_market_clone/pages/chats.dart';
 import 'package:carrot_market_clone/pages/home.dart';
 import 'package:carrot_market_clone/pages/nearby.dart';
-import 'package:carrot_market_clone/pages/neighborhoodLife.dart';
-import 'package:carrot_market_clone/pages/user.dart';
+import 'package:carrot_market_clone/pages/my_local.dart';
+import 'package:carrot_market_clone/pages/my_karrot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -16,17 +16,17 @@ class App extends GetView<AppController> {
       case RouteName.HOME:
         return Home();
         break;
-      case RouteName.NEIGHBORHOODLIFE:
-        return NeighborhoodLife();
+      case RouteName.MYLOCAL:
+        return MyLocal();
         break;
       case RouteName.NEARBY:
         return Nearby();
         break;
-      case RouteName.CHATTING:
-        return Chatting();
+      case RouteName.CHATS:
+        return Chats();
         break;
-      case RouteName.USER:
-        return User();
+      case RouteName.MYKARROT:
+        return MyKarrot();
         break;
     }
     return Container();

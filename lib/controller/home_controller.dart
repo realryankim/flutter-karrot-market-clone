@@ -10,16 +10,22 @@ class HomeController extends GetxController {
     'setting_neighborhood': '내 동네 설정하기',
   };
   late ContentsRepository contentsRepository;
+  bool openOtherLocal = false;
 
   @override
   void onInit() {
     changeLocation('ara');
     contentsRepository = ContentsRepository();
+    openOtherLocal = false;
     super.onInit();
   }
 
   void changeLocation(String location) {
     currentLocation!(location);
+  }
+
+  void changeArrow() {
+    openOtherLocal = !openOtherLocal;
   }
 
   Future<List<Map<String, dynamic>>> loadContents() {

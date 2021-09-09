@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NeighborhoodLife extends StatelessWidget {
-  const NeighborhoodLife({Key? key}) : super(key: key);
+class MyLocal extends StatelessWidget {
+  const MyLocal({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

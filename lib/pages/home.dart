@@ -1,6 +1,7 @@
 import 'package:carrot_market_clone/pages/product_detail.dart';
 import 'package:carrot_market_clone/controller/home_controller.dart';
 import 'package:carrot_market_clone/utils/data_utils.dart';
+import 'package:carrot_market_clone/utils/tool_tip_shape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -121,17 +122,10 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: () {
-            print('다른 지역');
-          },
+          onTap: () {},
           child: PopupMenuButton<String>(
-            offset: Offset(0, 35),
-            shape: ShapeBorder.lerp(
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular((10.0))),
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular((10.0))),
-                1),
+            offset: Offset(0, 38),
+            shape: TooltipShape(),
             onSelected: (String where) {
               controller.changeLocation(where);
             },
@@ -148,7 +142,9 @@ class Home extends StatelessWidget {
                 children: [
                   Text(controller.locationTypeToString[
                       controller.currentLocation!.value]!),
-                  Icon(Icons.keyboard_arrow_down_rounded),
+                  controller.openOtherLocal
+                      ? Icon(Icons.keyboard_arrow_up_rounded)
+                      : Icon(Icons.keyboard_arrow_down_rounded),
                 ],
               ),
             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class User extends StatelessWidget {
-  const User({Key? key}) : super(key: key);
+class MyKarrot extends StatelessWidget {
+  const MyKarrot({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
