@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_market_clone/components/manner_temperature.dart';
 import 'package:carrot_market_clone/components/other_selling_content_list.dart';
+import 'package:carrot_market_clone/controller/product_detail_controller.dart';
 import 'package:carrot_market_clone/utils/data_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,6 +21,16 @@ class _ProductDetailState extends State<ProductDetail> {
   late double height;
   late List<String> imgList;
   late int _current;
+  late ProductDetailController _controller;
+  late Animation _colorTween;
+
+  @override
+  void initState() {
+    _controller = Get.put(ProductDetailController());
+    _colorTween = _controller.colorTween;
+    super.initState();
+  }
+
   @override
   void didChangeDependencies() {
     width = Get.width;
@@ -245,6 +256,7 @@ class _ProductDetailState extends State<ProductDetail> {
 
   Widget _bodyWidget() {
     return CustomScrollView(
+      controller: _controller.scrollController,
       slivers: [
         SliverList(
           delegate: SliverChildListDelegate(
@@ -336,43 +348,47 @@ class _ProductDetailState extends State<ProductDetail> {
     );
   }
 
+  Widget _makeIcon(IconData icon) {
+    return AnimatedBuilder(
+      animation: _colorTween,
+      builder: (context, child) => Icon(
+        icon,
+        color: _colorTween.value,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
+    return Obx(
+      () => Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          // withAlpha(0~255)
+          backgroundColor:
+              Colors.white.withAlpha(_controller.scrollPositionToAlpha.toInt()),
+          elevation: 0,
+          leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: _makeIcon(Icons.arrow_back)),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  print('공유하기');
+                },
+                icon: _makeIcon(Icons.ios_share)),
+            IconButton(
+                onPressed: () {
+                  print('옵션');
+                },
+                icon: _makeIcon(Icons.more_vert)),
+          ],
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                print('공유하기');
-              },
-              icon: Icon(
-                Icons.ios_share,
-                color: Colors.white,
-              )),
-          IconButton(
-              onPressed: () {
-                print('옵션');
-              },
-              icon: Icon(
-                Icons.more_vert,
-                color: Colors.white,
-              )),
-        ],
+        body: _bodyWidget(),
+        bottomNavigationBar: _bottomBarWidget(),
       ),
-      body: _bodyWidget(),
-      bottomNavigationBar: _bottomBarWidget(),
     );
   }
 }

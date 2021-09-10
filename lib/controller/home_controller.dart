@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
+
   RxString? currentLocation = "".obs;
   final Map<String, String> locationTypeToString = {
     'ara': '아라동',
