@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_market_clone/components/manner_temperature.dart';
 import 'package:carrot_market_clone/components/other_selling_content_list.dart';
+import 'package:carrot_market_clone/utils/data_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ProductDetail extends StatefulWidget {
@@ -266,8 +268,71 @@ class _ProductDetailState extends State<ProductDetail> {
   Widget _bottomBarWidget() {
     return Container(
       width: width,
-      height: 55,
-      color: Color(0xFFFF8A3D),
+      height: 60,
+      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Colors.grey.withOpacity(0.2)),
+        ),
+      ),
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: () {
+              print('관심상품 이벤트');
+            },
+            child: SvgPicture.asset(
+              'assets/svg/heart_off.svg',
+              width: 18,
+              height: 18,
+              color: Colors.grey.shade800,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 15.0),
+            height: 40.0,
+            width: 1.0,
+            color: Colors.black.withOpacity(0.1),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                DataUtils.calcStringToWon(widget.data!['price']),
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                '가격제안불가',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: Colors.grey.shade800,
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    '채팅으로 거래하기',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFFFF8A3D),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -289,13 +354,17 @@ class _ProductDetailState extends State<ProductDetail> {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                print('공유하기');
+              },
               icon: Icon(
                 Icons.ios_share,
                 color: Colors.white,
               )),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                print('옵션');
+              },
               icon: Icon(
                 Icons.more_vert,
                 color: Colors.white,
