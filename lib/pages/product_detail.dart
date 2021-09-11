@@ -19,6 +19,8 @@ class ProductDetail extends StatefulWidget {
 class _ProductDetailState extends State<ProductDetail> {
   late double width;
   late double height;
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
   late List<String> imgList;
   late int _current;
   late ProductDetailController _controller;
@@ -291,13 +293,52 @@ class _ProductDetailState extends State<ProductDetail> {
         children: [
           GestureDetector(
             onTap: () {
-              print('관심상품 이벤트');
+              setState(() {
+                _controller.addMyFavorite();
+              });
+              if (_controller.isMyFavoriteProduct) {
+                scaffoldMessengerKey.currentState?.showSnackBar(
+                  SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 20.0),
+                    duration: Duration(
+                      milliseconds: 3000,
+                    ),
+                    content: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '관심목록에 추가되었어요.',
+                          style: TextStyle(fontSize: 12.0),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            print('관심목록 상품으로 이동');
+                          },
+                          child: Text(
+                            '관심목록보기',
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFFF8A3D),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
             },
             child: SvgPicture.asset(
-              'assets/svg/heart_off.svg',
+              _controller.isMyFavoriteProduct
+                  ? 'assets/svg/heart_on.svg'
+                  : 'assets/svg/heart_off.svg',
               width: 18,
               height: 18,
-              color: Colors.grey.shade800,
+              color: _controller.isMyFavoriteProduct
+                  ? Color(0xFFFF8A3D)
+                  : Colors.grey.shade800,
             ),
           ),
           Container(
@@ -361,33 +402,36 @@ class _ProductDetailState extends State<ProductDetail> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          // withAlpha(0~255)
-          backgroundColor:
-              Colors.white.withAlpha(_controller.scrollPositionToAlpha.toInt()),
-          elevation: 0,
-          leading: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: _makeIcon(Icons.arrow_back)),
-          actions: [
-            IconButton(
+      () => ScaffoldMessenger(
+        key: scaffoldMessengerKey,
+        child: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            // withAlpha(0~255)
+            backgroundColor: Colors.white
+                .withAlpha(_controller.scrollPositionToAlpha.toInt()),
+            elevation: 0,
+            leading: IconButton(
                 onPressed: () {
-                  print('공유하기');
+                  Get.back();
                 },
-                icon: _makeIcon(Icons.ios_share)),
-            IconButton(
-                onPressed: () {
-                  print('옵션');
-                },
-                icon: _makeIcon(Icons.more_vert)),
-          ],
+                icon: _makeIcon(Icons.arrow_back)),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    print('공유하기');
+                  },
+                  icon: _makeIcon(Icons.ios_share)),
+              IconButton(
+                  onPressed: () {
+                    print('옵션');
+                  },
+                  icon: _makeIcon(Icons.more_vert)),
+            ],
+          ),
+          body: _bodyWidget(),
+          bottomNavigationBar: _bottomBarWidget(),
         ),
-        body: _bodyWidget(),
-        bottomNavigationBar: _bottomBarWidget(),
       ),
     );
   }

@@ -7,9 +7,9 @@ class ProductDetailController extends GetxController
 
   ScrollController scrollController = ScrollController();
   RxDouble scrollPositionToAlpha = 0.0.obs;
-
   late AnimationController _animationController;
   late Animation colorTween;
+  late bool isMyFavoriteProduct = false;
 
   @override
   void onInit() {
@@ -22,8 +22,13 @@ class ProductDetailController extends GetxController
       } else {
         scrollPositionToAlpha(scrollController.offset);
       }
+      // _animationController.value(0 ~ 1)
       _animationController.value = scrollPositionToAlpha / 255;
     });
     super.onInit();
+  }
+
+  void addMyFavorite() {
+    isMyFavoriteProduct = !isMyFavoriteProduct;
   }
 }
