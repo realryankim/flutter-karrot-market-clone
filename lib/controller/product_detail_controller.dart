@@ -1,3 +1,5 @@
+import 'package:carrot_market_clone/controller/home_controller.dart';
+import 'package:carrot_market_clone/repository/contents_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +11,6 @@ class ProductDetailController extends GetxController
   RxDouble scrollPositionToAlpha = 0.0.obs;
   late AnimationController _animationController;
   late Animation colorTween;
-  late bool isMyFavoriteProduct = false;
 
   @override
   void onInit() {
@@ -22,13 +23,10 @@ class ProductDetailController extends GetxController
       } else {
         scrollPositionToAlpha(scrollController.offset);
       }
-      // _animationController.value(0 ~ 1)
+      // _animationController.value는 0~1 사이의 값을 갖는다.
       _animationController.value = scrollPositionToAlpha / 255;
     });
-    super.onInit();
-  }
 
-  void addMyFavorite() {
-    isMyFavoriteProduct = !isMyFavoriteProduct;
+    super.onInit();
   }
 }

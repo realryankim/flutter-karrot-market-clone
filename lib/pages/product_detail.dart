@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_market_clone/components/manner_temperature.dart';
 import 'package:carrot_market_clone/components/other_selling_content_list.dart';
 import 'package:carrot_market_clone/controller/product_detail_controller.dart';
+import 'package:carrot_market_clone/repository/contents_repository.dart';
 import 'package:carrot_market_clone/utils/data_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,12 +26,25 @@ class _ProductDetailState extends State<ProductDetail> {
   late int _current;
   late ProductDetailController _controller;
   late Animation _colorTween;
+  late ContentsRepository contentsRepository;
+  late bool isMyFavoriteProduct = false;
 
   @override
   void initState() {
+    super.initState();
     _controller = Get.put(ProductDetailController());
     _colorTween = _controller.colorTween;
-    super.initState();
+    contentsRepository = ContentsRepository();
+    _loadMyFavoriteContentsState();
+  }
+
+  _loadMyFavoriteContentsState() async {
+    bool isFavoriteProduct =
+        await contentsRepository.isMyFavoriteProducts(widget.data!['pid']);
+    // setState
+    setState(() {
+      isMyFavoriteProduct = isFavoriteProduct;
+    });
   }
 
   @override
@@ -50,7 +64,7 @@ class _ProductDetailState extends State<ProductDetail> {
       child: Stack(
         children: [
           Hero(
-            tag: widget.data!['cid'],
+            tag: widget.data!['pid'],
             child: CarouselSlider(
               options: CarouselOptions(
                   height: width,
@@ -292,51 +306,57 @@ class _ProductDetailState extends State<ProductDetail> {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              if (isMyFavoriteProduct) {
+                await contentsRepository
+                    .deleteMyFavoriteProduct(widget.data!['pid']);
+              } else {
+                await contentsRepository.addMyFavoriteProduct(widget.data!);
+              }
+
               setState(() {
-                _controller.addMyFavorite();
+                isMyFavoriteProduct = !isMyFavoriteProduct;
               });
-              if (_controller.isMyFavoriteProduct) {
-                scaffoldMessengerKey.currentState?.showSnackBar(
-                  SnackBar(
-                    behavior: SnackBarBehavior.floating,
-                    margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 20.0),
-                    duration: Duration(
-                      milliseconds: 3000,
-                    ),
-                    content: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '관심목록에 추가되었어요.',
-                          style: TextStyle(fontSize: 12.0),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            print('관심목록 상품으로 이동');
-                          },
-                          child: Text(
-                            '관심목록보기',
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFFFF8A3D),
-                            ),
+
+              scaffoldMessengerKey.currentState?.showSnackBar(
+                SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 20.0),
+                  duration: Duration(
+                    milliseconds: 3000,
+                  ),
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '관심목록에 추가되었어요.',
+                        style: TextStyle(fontSize: 12.0),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          print('관심목록 상품으로 이동');
+                        },
+                        child: Text(
+                          '관심목록보기',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFFF8A3D),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              }
+                ),
+              );
             },
             child: SvgPicture.asset(
-              _controller.isMyFavoriteProduct
+              isMyFavoriteProduct
                   ? 'assets/svg/heart_on.svg'
                   : 'assets/svg/heart_off.svg',
               width: 18,
               height: 18,
-              color: _controller.isMyFavoriteProduct
+              color: isMyFavoriteProduct
                   ? Color(0xFFFF8A3D)
                   : Colors.grey.shade800,
             ),

@@ -29,7 +29,7 @@ class HomeController extends GetxController {
     openOtherLocal = !openOtherLocal;
   }
 
-  Future<List<Map<String, dynamic>>> loadContents() {
+  Future<List<dynamic>> loadContents() {
     return contentsRepository.loadContentsFromLocation(currentLocation!.value);
   }
 }
