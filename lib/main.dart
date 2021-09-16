@@ -1,5 +1,6 @@
 import 'package:carrot_market_clone/app.dart';
 import 'package:carrot_market_clone/binding/init_binding.dart';
+import 'package:carrot_market_clone/pages/interesting_product.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_market_clone/components/manner_temperature.dart';
 import 'package:carrot_market_clone/components/other_selling_content_list.dart';
+import 'package:carrot_market_clone/controller/interesting_product_controller.dart';
 import 'package:carrot_market_clone/controller/product_detail_controller.dart';
+import 'package:carrot_market_clone/pages/interesting_product.dart';
 import 'package:carrot_market_clone/repository/contents_repository.dart';
 import 'package:carrot_market_clone/utils/data_utils.dart';
 import 'package:flutter/material.dart';
@@ -318,37 +320,40 @@ class _ProductDetailState extends State<ProductDetail> {
                 isMyFavoriteProduct = !isMyFavoriteProduct;
               });
 
-              scaffoldMessengerKey.currentState?.showSnackBar(
-                SnackBar(
-                  behavior: SnackBarBehavior.floating,
-                  margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 20.0),
-                  duration: Duration(
-                    milliseconds: 3000,
-                  ),
-                  content: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '관심목록에 추가되었어요.',
-                        style: TextStyle(fontSize: 12.0),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          print('관심목록 상품으로 이동');
-                        },
-                        child: Text(
-                          '관심목록보기',
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFFFF8A3D),
+              if (isMyFavoriteProduct) {
+                scaffoldMessengerKey.currentState?.showSnackBar(
+                  SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 20.0),
+                    duration: Duration(
+                      milliseconds: 3000,
+                    ),
+                    content: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '관심목록에 추가되었어요.',
+                          style: TextStyle(fontSize: 12.0),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(InterestingProduct(
+                                isMyFavoriteProduct: isMyFavoriteProduct));
+                          },
+                          child: Text(
+                            '관심목록보기',
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFFF8A3D),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              );
+                );
+              }
             },
             child: SvgPicture.asset(
               isMyFavoriteProduct
@@ -421,6 +426,7 @@ class _ProductDetailState extends State<ProductDetail> {
 
   @override
   Widget build(BuildContext context) {
+    // Get.put(InterestingProductController());
     return Obx(
       () => ScaffoldMessenger(
         key: scaffoldMessengerKey,
