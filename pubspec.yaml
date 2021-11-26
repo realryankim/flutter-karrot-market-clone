@@ -32,6 +32,8 @@ dependencies:
   intl: ^0.17.0
   carousel_slider: ^4.0.0
   flutter_secure_storage: ^4.2.1
+  cloud_firestore: ^2.5.3
+  firebase_core: ^1.7.0
 
 dev_dependencies:
   flutter_test:

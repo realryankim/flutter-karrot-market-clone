@@ -7,10 +7,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class InterestingProduct extends StatefulWidget {
-  bool isMyFavoriteProduct;
+  // bool isMyFavoriteProduct;
 
-  InterestingProduct({Key? key, required this.isMyFavoriteProduct})
-      : super(key: key);
+  InterestingProduct({
+    Key? key,
+    // required this.isMyFavoriteProduct,
+  }) : super(key: key);
 
   @override
   _InterestingProductState createState() => _InterestingProductState();
@@ -69,25 +71,25 @@ class _InterestingProductState extends State<InterestingProduct> {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(fontSize: 15.0),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  // needs to refactor to remove each interesting product
-                                  setState(() {
-                                    widget.isMyFavoriteProduct =
-                                        !widget.isMyFavoriteProduct;
-                                  });
-                                },
-                                child: SvgPicture.asset(
-                                  widget.isMyFavoriteProduct
-                                      ? 'assets/svg/heart_on.svg'
-                                      : 'assets/svg/heart_off.svg',
-                                  width: 18,
-                                  height: 18,
-                                  color: widget.isMyFavoriteProduct
-                                      ? Color(0xFFFF8A3D)
-                                      : Colors.grey.shade800,
-                                ),
-                              ),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     // needs to refactor to remove each interesting product
+                              //     setState(() {
+                              //       widget.isMyFavoriteProduct =
+                              //           !widget.isMyFavoriteProduct;
+                              //     });
+                              //   },
+                              //   child: SvgPicture.asset(
+                              //     widget.isMyFavoriteProduct
+                              //         ? 'assets/svg/heart_on.svg'
+                              //         : 'assets/svg/heart_off.svg',
+                              //     width: 18,
+                              //     height: 18,
+                              //     color: widget.isMyFavoriteProduct
+                              //         ? Color(0xFFFF8A3D)
+                              //         : Colors.grey.shade800,
+                              //   ),
+                              // ),
                             ],
                           ),
                           SizedBox(height: 5.0),

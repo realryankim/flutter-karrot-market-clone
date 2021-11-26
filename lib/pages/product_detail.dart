@@ -337,8 +337,11 @@ class _ProductDetailState extends State<ProductDetail> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(InterestingProduct(
-                                isMyFavoriteProduct: isMyFavoriteProduct));
+                            Get.to(
+                              () => InterestingProduct(
+                                  // isMyFavoriteProduct: isMyFavoriteProduct,
+                                  ),
+                            );
                           },
                           child: Text(
                             '관심목록보기',
