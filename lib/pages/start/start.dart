@@ -56,11 +56,13 @@ class Start extends StatelessWidget {
                   children: [
                     PrimaryButton(
                       onTap: () {
-                        // TODO: 유저 위치 페이지
+                        // TODO: 회원 가입 페이지 이동
+                        // TODO: 회원 가입 후, 바로 Home 페이지? or 로그인 페이지로 이동?
                       },
-                      text: '시작하기',
+                      // text: '시작하기', // 기존
+                      text: '회원가입',
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 35),
                     Row(
                       children: [
                         Text(

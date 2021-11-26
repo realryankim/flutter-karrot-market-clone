@@ -20,6 +20,7 @@ class Auth extends StatelessWidget {
           '로그인',
           style: TextStyle(
             color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,

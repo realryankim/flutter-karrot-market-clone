@@ -30,8 +30,15 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       getPages: [
         // GetPage(name: '/', page: () => Splash()),
-        GetPage(name: '/', page: () => Start()),
-        GetPage(name: '/auth', page: () => Auth()),
+        GetPage(
+          name: '/',
+          page: () => Start(),
+        ),
+        GetPage(
+          name: '/auth',
+          page: () => Auth(),
+          transition: Transition.rightToLeft,
+        ),
       ],
     );
   }

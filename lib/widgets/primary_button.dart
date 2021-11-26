@@ -23,6 +23,7 @@ class PrimaryButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),
+        // TODO: AuthController를 만들어서, TextFormField의 email, 비밀번호가 입력이 되었을 때, 색깔 변화
         primary: text.length > 0 ? ColorsKM.primary : Colors.grey,
         onPrimary: Colors.white,
         alignment: Alignment.center,
