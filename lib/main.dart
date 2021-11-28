@@ -3,6 +3,7 @@ import 'package:carrot_market_clone/binding/init_binding.dart';
 import 'package:carrot_market_clone/pages/interesting_product.dart';
 import 'package:carrot_market_clone/pages/login/login.dart';
 import 'package:carrot_market_clone/pages/sign_up/sign_up.dart';
+import 'package:carrot_market_clone/pages/start/splash.dart';
 import 'package:carrot_market_clone/pages/start/start.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,11 @@ class MyApp extends StatelessWidget {
       initialBinding: InitBinding(),
       initialRoute: '/',
       getPages: [
-        // GetPage(name: '/', page: () => Splash()),
+        // GetPage(
+        //   name: '/',
+        //   page: () => Splash(),
+        //   transition: Transition.fadeIn,
+        // ),
         GetPage(
           name: '/',
           page: () => Start(),
