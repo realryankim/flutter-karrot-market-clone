@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       initialBinding: InitBinding(),
-      initialRoute: '/',
+      initialRoute: '/start',
       getPages: [
         // GetPage(
         //   name: '/',
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         //   transition: Transition.fadeIn,
         // ),
         GetPage(
-          name: '/',
+          name: '/start',
           page: () => Start(),
         ),
         GetPage(
@@ -53,6 +53,11 @@ class MyApp extends StatelessWidget {
           page: () => SignUp(),
           transition: Transition.rightToLeft,
         ),
+        GetPage(
+          name: '/app',
+          page: () => App(),
+          transition: Transition.rightToLeft,
+        )
       ],
     );
   }

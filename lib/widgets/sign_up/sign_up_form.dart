@@ -1,7 +1,9 @@
+import 'package:carrot_market_clone/controller/sign_up_controller.dart';
 import 'package:carrot_market_clone/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class SignUpForm extends StatelessWidget {
+class SignUpForm extends GetView<SignUpController> {
   const SignUpForm({Key? key}) : super(key: key);
 
   @override
@@ -45,7 +47,9 @@ class SignUpForm extends StatelessWidget {
                     textCapitalization: TextCapitalization.none,
                     enableSuggestions: false,
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value) {},
+                    onChanged: (value) {
+                      controller.userEmail.value = value;
+                    },
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -88,7 +92,9 @@ class SignUpForm extends StatelessWidget {
                     textCapitalization: TextCapitalization.none,
                     enableSuggestions: false,
                     keyboardType: TextInputType.text,
-                    validator: (value) {},
+                    onChanged: (value) {
+                      controller.userName.value = value;
+                    },
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -132,7 +138,9 @@ class SignUpForm extends StatelessWidget {
                     enableSuggestions: false,
                     keyboardType: TextInputType.text,
                     obscureText: true,
-                    validator: (value) {},
+                    onChanged: (value) {
+                      controller.userPassword.value = value;
+                    },
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -176,6 +184,7 @@ class SignUpForm extends StatelessWidget {
                     onTap: () {
                       // TODO: validation
                       // TODO: 회원 가입 완료 모달 및 로그인 페이지로 이동
+                      controller.trySubmit();
                     },
                     text: '회원가입',
                   ),
