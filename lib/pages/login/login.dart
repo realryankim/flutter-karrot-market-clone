@@ -1,9 +1,9 @@
-import 'package:carrot_market_clone/widgets/auth/auth_form.dart';
+import 'package:carrot_market_clone/widgets/login/login_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Auth extends StatelessWidget {
-  const Auth({Key? key}) : super(key: key);
+class Login extends StatelessWidget {
+  const Login({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class Auth extends StatelessWidget {
         onTap: () {
           Get.focusScope!.unfocus();
         },
-        child: AuthForm(),
+        child: LoginForm(),
       ),
     );
   }

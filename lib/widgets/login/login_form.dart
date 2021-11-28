@@ -1,8 +1,8 @@
 import 'package:carrot_market_clone/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 
-class AuthForm extends StatelessWidget {
-  const AuthForm({Key? key}) : super(key: key);
+class LoginForm extends StatelessWidget {
+  const LoginForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +11,8 @@ class AuthForm extends StatelessWidget {
         horizontal: 20.0,
         vertical: 10.0,
       ),
+      // TODO: 이메일, 비밀번호가 잘못 입력되면, 텍스트가 사라지고,
+      // 텍스트 폼이 위로 올라가도록?
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -127,6 +129,8 @@ class AuthForm extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20),
+                  // TODO: 이메일, 비밀번호 잘못 입력 시, 스낵바(BG: black, TEXT: white)
+                  // "이메일이 잘못되었어요. 다시 한번 확인해주세요."
                   PrimaryButton(
                     onTap: () {
                       // TODO: validation

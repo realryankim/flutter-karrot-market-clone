@@ -1,12 +1,16 @@
 import 'package:carrot_market_clone/app.dart';
 import 'package:carrot_market_clone/binding/init_binding.dart';
-import 'package:carrot_market_clone/pages/auth/auth.dart';
 import 'package:carrot_market_clone/pages/interesting_product.dart';
+import 'package:carrot_market_clone/pages/login/login.dart';
+import 'package:carrot_market_clone/pages/sign_up/sign_up.dart';
 import 'package:carrot_market_clone/pages/start/start.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -35,8 +39,13 @@ class MyApp extends StatelessWidget {
           page: () => Start(),
         ),
         GetPage(
-          name: '/auth',
-          page: () => Auth(),
+          name: '/login',
+          page: () => Login(),
+          transition: Transition.rightToLeft,
+        ),
+        GetPage(
+          name: '/signup',
+          page: () => SignUp(),
           transition: Transition.rightToLeft,
         ),
       ],

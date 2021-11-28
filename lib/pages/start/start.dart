@@ -58,6 +58,7 @@ class Start extends StatelessWidget {
                       onTap: () {
                         // TODO: 회원 가입 페이지 이동
                         // TODO: 회원 가입 후, 바로 Home 페이지? or 로그인 페이지로 이동?
+                        Get.toNamed('/signup');
                       },
                       // text: '시작하기', // 기존
                       text: '회원가입',
@@ -74,7 +75,7 @@ class Start extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.toNamed('/auth');
+                            Get.toNamed('/login');
                           },
                           child: Text(
                             "로그인 ",
