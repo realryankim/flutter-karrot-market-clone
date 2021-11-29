@@ -7,10 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class Home extends StatelessWidget {
+class Home extends GetView<HomeController> {
   Home({Key? key}) : super(key: key);
-
-  final HomeController controller = Get.put(HomeController());
 
   Widget _makeDataList(List<Map<String, dynamic>> datas) {
     return ListView.separated(
@@ -121,8 +119,10 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<HomeController>();
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: GestureDetector(
           onTap: () {},
           child: PopupMenuButton<String>(
@@ -142,11 +142,22 @@ class Home extends StatelessWidget {
             child: Obx(
               () => Row(
                 children: [
-                  Text(controller.locationTypeToString[
-                      controller.currentLocation!.value]!),
+                  Text(
+                    controller.locationTypeToString[
+                        controller.currentLocation!.value]!,
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
                   controller.openOtherLocal
-                      ? Icon(Icons.keyboard_arrow_up_rounded)
-                      : Icon(Icons.keyboard_arrow_down_rounded),
+                      ? Icon(
+                          Icons.keyboard_arrow_up_rounded,
+                          color: Colors.black,
+                        )
+                      : Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: Colors.black,
+                        ),
                 ],
               ),
             ),
@@ -158,13 +169,19 @@ class Home extends StatelessWidget {
             onPressed: () {
               print('상품 검색');
             },
-            icon: Icon(Icons.search),
+            icon: Icon(
+              Icons.search,
+              color: Colors.black,
+            ),
           ),
           IconButton(
             onPressed: () {
               print('카테고리');
             },
-            icon: Icon(Icons.tune),
+            icon: Icon(
+              Icons.tune,
+              color: Colors.black,
+            ),
           ),
           IconButton(
             onPressed: () {
@@ -173,6 +190,7 @@ class Home extends StatelessWidget {
             icon: SvgPicture.asset(
               'assets/svg/bell.svg',
               width: 22,
+              color: Colors.black,
             ),
           ),
         ],

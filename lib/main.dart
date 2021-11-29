@@ -1,6 +1,7 @@
 import 'package:carrot_market_clone/pages/app.dart';
 import 'package:carrot_market_clone/binding/init_binding.dart';
 import 'package:carrot_market_clone/pages/bridge_firebase.dart';
+import 'package:carrot_market_clone/pages/bridge_page.dart';
 import 'package:carrot_market_clone/pages/my_karrot/interesting_product.dart';
 import 'package:carrot_market_clone/pages/login/login.dart';
 import 'package:carrot_market_clone/pages/sign_up/sign_up.dart';
@@ -40,6 +41,15 @@ class MyApp extends StatelessWidget {
           page: () => BridgeFirebase(),
         ),
         GetPage(
+          name: '/bridge_page',
+          page: () => BridgePage(),
+        ),
+        GetPage(
+          name: '/app',
+          page: () => App(),
+          transition: Transition.rightToLeft,
+        ),
+        GetPage(
           name: '/start',
           page: () => Start(),
         ),
@@ -53,11 +63,6 @@ class MyApp extends StatelessWidget {
           page: () => SignUp(),
           transition: Transition.rightToLeft,
         ),
-        GetPage(
-          name: '/app',
-          page: () => App(),
-          transition: Transition.rightToLeft,
-        )
       ],
     );
   }
