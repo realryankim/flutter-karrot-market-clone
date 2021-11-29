@@ -9,7 +9,7 @@ class InitBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(AppController());
-    Get.lazyPut(() => SignUpController());
-    Get.lazyPut(() => LoginController());
+    Get.put(SignUpController());
+    Get.put(LoginController());
   }
 }

@@ -1,3 +1,4 @@
+import 'package:carrot_market_clone/utils/error_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,7 +6,6 @@ import 'package:get/get.dart';
 class SignUpController extends GetxController {
   static SignUpController get to => SignUpController();
 
-  final formKey = GlobalKey<FormState>();
   RxString userEmail = ''.obs;
   RxString userName = ''.obs;
   RxString userPassword = ''.obs;
@@ -56,23 +56,8 @@ class SignUpController extends GetxController {
 
     Get.focusScope!.unfocus();
 
-    print("isValid: $isValid");
     if (!isValid) {
-      Get.showSnackbar(
-        GetBar(
-          messageText: Text('입력이 잘못되었어요. 다시 한번 확인해주세요.',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 11.0,
-              )),
-          backgroundColor: Colors.black,
-          margin: EdgeInsets.all(8.0),
-          padding: EdgeInsets.all(12.0),
-          borderRadius: 5.0,
-          duration: Duration(seconds: 3),
-        ),
-      );
-      return;
+      ErrorSnackbar.errorSnackbar();
     }
 
     if (isValid) {
@@ -84,7 +69,7 @@ class SignUpController extends GetxController {
     }
   }
 
-  submitSignUpForm(
+  void submitSignUpForm(
     String email,
     String name,
     String password,
@@ -96,25 +81,12 @@ class SignUpController extends GetxController {
       );
 
       if (newUser.user != null) {
-        // 회원가입 성공 => app으로 페이지로 이동
+        // 회원가입 성공 => app 페이지로 이동
         Get.toNamed('/app');
       }
     } catch (error) {
       print(error);
-      Get.showSnackbar(
-        GetBar(
-          messageText: Text('입력이 잘못되었어요. 다시 한번 확인해주세요.',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 11.0,
-              )),
-          backgroundColor: Colors.black,
-          margin: EdgeInsets.all(8.0),
-          padding: EdgeInsets.all(12.0),
-          borderRadius: 5.0,
-          duration: Duration(seconds: 3),
-        ),
-      );
+      ErrorSnackbar.errorSnackbar();
     }
   }
 }

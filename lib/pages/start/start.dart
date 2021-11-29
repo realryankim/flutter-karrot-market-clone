@@ -61,7 +61,7 @@ class Start extends StatelessWidget {
                         Get.toNamed('/signup');
                       },
                       // text: '시작하기', // 기존
-                      text: '회원가입',
+                      buttonText: '회원가입',
                     ),
                     SizedBox(height: 35),
                     Row(

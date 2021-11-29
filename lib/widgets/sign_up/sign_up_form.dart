@@ -37,7 +37,7 @@ class SignUpForm extends GetView<SignUpController> {
             ),
           ),
           SizedBox(height: 25),
-          // 로그인 폼
+          // 회원가입 폼
           SingleChildScrollView(
             child: Form(
               child: Column(
@@ -60,12 +60,9 @@ class SignUpForm extends GetView<SignUpController> {
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
-                        borderSide:
-                            // text.length > 0 || text.isNotEmpty ?
-                            BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.grey,
                         ),
-                        // : BorderSide.none
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
@@ -105,12 +102,9 @@ class SignUpForm extends GetView<SignUpController> {
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
-                        borderSide:
-                            // text.length > 0 || text.isNotEmpty ?
-                            BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.grey,
                         ),
-                        // : BorderSide.none
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
@@ -151,12 +145,9 @@ class SignUpForm extends GetView<SignUpController> {
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
-                        borderSide:
-                            // text.length > 0 || text.isNotEmpty ?
-                            BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.grey,
                         ),
-                        // : BorderSide.none
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
@@ -178,15 +169,11 @@ class SignUpForm extends GetView<SignUpController> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  // TODO: 이메일, 비밀번호 잘못 입력 시, 스낵바(BG: black, TEXT: white)
-                  // "이메일이 잘못되었어요. 다시 한번 확인해주세요."
                   PrimaryButton(
                     onTap: () {
-                      // TODO: validation
-                      // TODO: 회원 가입 완료 모달 및 로그인 페이지로 이동
                       controller.trySubmit();
                     },
-                    text: '회원가입',
+                    buttonText: '회원가입',
                   ),
                 ],
               ),

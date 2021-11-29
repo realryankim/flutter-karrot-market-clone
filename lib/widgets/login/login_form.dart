@@ -1,7 +1,9 @@
+import 'package:carrot_market_clone/controller/login_controller.dart';
 import 'package:carrot_market_clone/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends GetView<LoginController> {
   const LoginForm({Key? key}) : super(key: key);
 
   @override
@@ -47,7 +49,9 @@ class LoginForm extends StatelessWidget {
                     textCapitalization: TextCapitalization.none,
                     enableSuggestions: false,
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value) {},
+                    onChanged: (value) {
+                      controller.userEmail.value = value;
+                    },
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -58,12 +62,9 @@ class LoginForm extends StatelessWidget {
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
-                        borderSide:
-                            // text.length > 0 || text.isNotEmpty ?
-                            BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.grey,
                         ),
-                        // : BorderSide.none
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
@@ -91,7 +92,9 @@ class LoginForm extends StatelessWidget {
                     enableSuggestions: false,
                     keyboardType: TextInputType.emailAddress,
                     obscureText: true,
-                    validator: (value) {},
+                    onChanged: (value) {
+                      controller.userPassword.value = value;
+                    },
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -102,12 +105,9 @@ class LoginForm extends StatelessWidget {
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
-                        borderSide:
-                            // text.length > 0 || text.isNotEmpty ?
-                            BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.grey,
                         ),
-                        // : BorderSide.none
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
@@ -129,14 +129,11 @@ class LoginForm extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20),
-                  // TODO: 이메일, 비밀번호 잘못 입력 시, 스낵바(BG: black, TEXT: white)
-                  // "이메일이 잘못되었어요. 다시 한번 확인해주세요."
                   PrimaryButton(
                     onTap: () {
-                      // TODO: validation
-                      // TODO: home으로 이동
+                      controller.trySubmit();
                     },
-                    text: '로그인',
+                    buttonText: '로그인',
                   ),
                 ],
               ),
