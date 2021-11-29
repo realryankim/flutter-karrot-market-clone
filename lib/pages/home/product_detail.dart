@@ -3,7 +3,7 @@ import 'package:carrot_market_clone/components/manner_temperature.dart';
 import 'package:carrot_market_clone/components/other_selling_content_list.dart';
 import 'package:carrot_market_clone/controller/interesting_product_controller.dart';
 import 'package:carrot_market_clone/controller/product_detail_controller.dart';
-import 'package:carrot_market_clone/pages/interesting_product.dart';
+import 'package:carrot_market_clone/pages/my_karrot/interesting_product.dart';
 import 'package:carrot_market_clone/repository/contents_repository.dart';
 import 'package:carrot_market_clone/utils/data_utils.dart';
 import 'package:flutter/material.dart';

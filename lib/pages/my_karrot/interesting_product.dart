@@ -1,17 +1,33 @@
-import 'package:carrot_market_clone/pages/product_detail.dart';
-import 'package:carrot_market_clone/controller/home_controller.dart';
+import 'package:carrot_market_clone/controller/interesting_product_controller.dart';
+import 'package:carrot_market_clone/pages/home/product_detail.dart';
+import 'package:carrot_market_clone/repository/contents_repository.dart';
 import 'package:carrot_market_clone/utils/data_utils.dart';
-import 'package:carrot_market_clone/utils/tool_tip_shape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class Home extends StatelessWidget {
-  Home({Key? key}) : super(key: key);
+class InterestingProduct extends StatefulWidget {
+  // bool isMyFavoriteProduct;
 
-  final HomeController controller = Get.put(HomeController());
+  InterestingProduct({
+    Key? key,
+    // required this.isMyFavoriteProduct,
+  }) : super(key: key);
 
-  Widget _makeDataList(List<Map<String, dynamic>> datas) {
+  @override
+  _InterestingProductState createState() => _InterestingProductState();
+}
+
+class _InterestingProductState extends State<InterestingProduct> {
+  late ContentsRepository contentsRepository;
+
+  @override
+  void initState() {
+    contentsRepository = ContentsRepository();
+    super.initState();
+  }
+
+  Widget _makeDataList(List<dynamic> datas) {
     return ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         itemBuilder: (BuildContext _context, int index) {
@@ -47,10 +63,34 @@ class Home extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            datas[index]['title'],
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 15.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                datas[index]['title'],
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 15.0),
+                              ),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     // needs to refactor to remove each interesting product
+                              //     setState(() {
+                              //       widget.isMyFavoriteProduct =
+                              //           !widget.isMyFavoriteProduct;
+                              //     });
+                              //   },
+                              //   child: SvgPicture.asset(
+                              //     widget.isMyFavoriteProduct
+                              //         ? 'assets/svg/heart_on.svg'
+                              //         : 'assets/svg/heart_off.svg',
+                              //     width: 18,
+                              //     height: 18,
+                              //     color: widget.isMyFavoriteProduct
+                              //         ? Color(0xFFFF8A3D)
+                              //         : Colors.grey.shade800,
+                              //   ),
+                              // ),
+                            ],
                           ),
                           SizedBox(height: 5.0),
                           Text(
@@ -99,7 +139,7 @@ class Home extends StatelessWidget {
 
   Widget _bodyWidget() {
     return FutureBuilder(
-        future: controller.loadContents(),
+        future: loadInterestingProducts(),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return Center(child: CircularProgressIndicator());
@@ -109,7 +149,7 @@ class Home extends StatelessWidget {
           }
           if (snapshot.hasData) {
             // AsyncSnapshot<Object?>을 List<Map<String, dynamic>>로 형변환
-            return _makeDataList(snapshot.data as List<Map<String, dynamic>>);
+            return _makeDataList(snapshot.data as List<dynamic>);
           }
           return Center(
             child: Text('해당 지역에 데이터가 없습니다.'),
@@ -117,63 +157,21 @@ class Home extends StatelessWidget {
         });
   }
 
+  Future<List<dynamic>?> loadInterestingProducts() async {
+    return await contentsRepository.loadFavoriteProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: GestureDetector(
-          onTap: () {},
-          child: PopupMenuButton<String>(
-            offset: Offset(0, 38),
-            shape: TooltipShape(),
-            onSelected: (String where) {
-              controller.changeLocation(where);
-            },
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(value: 'ara', child: Text('아라동')),
-                PopupMenuItem(value: 'ora', child: Text('오라동')),
-                PopupMenuItem(
-                    value: 'setting_neighborhood', child: Text('내 동네 설정하기')),
-              ];
-            },
-            child: Obx(
-              () => Row(
-                children: [
-                  Text(controller.locationTypeToString[
-                      controller.currentLocation!.value]!),
-                  controller.openOtherLocal
-                      ? Icon(Icons.keyboard_arrow_up_rounded)
-                      : Icon(Icons.keyboard_arrow_down_rounded),
-                ],
-              ),
-            ),
+        title: Text(
+          '관심목록',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
           ),
         ),
-        elevation: 1.0,
-        actions: [
-          IconButton(
-            onPressed: () {
-              print('상품 검색');
-            },
-            icon: Icon(Icons.search),
-          ),
-          IconButton(
-            onPressed: () {
-              print('카테고리');
-            },
-            icon: Icon(Icons.tune),
-          ),
-          IconButton(
-            onPressed: () {
-              print('알림');
-            },
-            icon: SvgPicture.asset(
-              'assets/svg/bell.svg',
-              width: 22,
-            ),
-          ),
-        ],
+        centerTitle: true,
       ),
       body: _bodyWidget(),
     );

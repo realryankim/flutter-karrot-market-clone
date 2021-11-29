@@ -1,6 +1,7 @@
-import 'package:carrot_market_clone/app.dart';
+import 'package:carrot_market_clone/pages/app.dart';
 import 'package:carrot_market_clone/binding/init_binding.dart';
-import 'package:carrot_market_clone/pages/interesting_product.dart';
+import 'package:carrot_market_clone/pages/bridge_firebase.dart';
+import 'package:carrot_market_clone/pages/my_karrot/interesting_product.dart';
 import 'package:carrot_market_clone/pages/login/login.dart';
 import 'package:carrot_market_clone/pages/sign_up/sign_up.dart';
 import 'package:carrot_market_clone/pages/start/splash.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Carrot Market Clone',
+      title: 'Karrot Market Clone',
       theme: ThemeData(
         primaryColor: Colors.black,
         primarySwatch: Colors.blue,
@@ -32,13 +33,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
       initialBinding: InitBinding(),
-      initialRoute: '/start',
+      initialRoute: '/',
       getPages: [
-        // GetPage(
-        //   name: '/',
-        //   page: () => Splash(),
-        //   transition: Transition.fadeIn,
-        // ),
+        GetPage(
+          name: '/',
+          page: () => BridgeFirebase(),
+        ),
         GetPage(
           name: '/start',
           page: () => Start(),

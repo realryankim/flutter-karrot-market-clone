@@ -1,9 +1,9 @@
 import 'package:carrot_market_clone/controller/app_controller.dart';
-import 'package:carrot_market_clone/pages/chats.dart';
-import 'package:carrot_market_clone/pages/home.dart';
-import 'package:carrot_market_clone/pages/nearby.dart';
-import 'package:carrot_market_clone/pages/my_local.dart';
-import 'package:carrot_market_clone/pages/my_karrot.dart';
+import 'package:carrot_market_clone/pages/chats/chats.dart';
+import 'package:carrot_market_clone/pages/home/home.dart';
+import 'package:carrot_market_clone/pages/nearby/nearby.dart';
+import 'package:carrot_market_clone/pages/my_local/my_local.dart';
+import 'package:carrot_market_clone/pages/my_karrot/my_karrot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
