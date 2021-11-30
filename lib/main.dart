@@ -63,6 +63,11 @@ class MyApp extends StatelessWidget {
           page: () => SignUp(),
           transition: Transition.rightToLeft,
         ),
+        GetPage(
+          name: '/interesting_product',
+          page: () => InterestingProduct(),
+          transition: Transition.rightToLeft,
+        )
       ],
     );
   }

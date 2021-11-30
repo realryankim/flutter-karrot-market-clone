@@ -3,6 +3,7 @@ import 'package:carrot_market_clone/pages/start/splash.dart';
 import 'package:carrot_market_clone/pages/start/start.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BridgePage extends StatelessWidget {
   const BridgePage({Key? key}) : super(key: key);
