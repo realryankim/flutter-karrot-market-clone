@@ -173,7 +173,8 @@ class ContentsRepository extends LocalStorageRepository {
     ]
   };
 
-  Future<List<dynamic>> loadContentsFromLocation(String location) async {
+  Future<List<Map<String, dynamic>>> loadContentsFromLocation(
+      String location) async {
     // API 통신 대신, mock 데이터 사용
     await Future.delayed(Duration(milliseconds: 1000));
     return data[location];

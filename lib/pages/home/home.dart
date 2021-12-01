@@ -3,6 +3,7 @@ import 'package:carrot_market_clone/controller/home_controller.dart';
 import 'package:carrot_market_clone/utils/colors.dart';
 import 'package:carrot_market_clone/utils/data_utils.dart';
 import 'package:carrot_market_clone/utils/tool_tip_shape.dart';
+import 'package:carrot_market_clone/widgets/home/app_bar_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -97,7 +98,8 @@ class Home extends GetView<HomeController> {
   }
 
   Widget _bodyWidget() {
-    return FutureBuilder(
+    return Obx(
+      () => FutureBuilder(
         future: controller.loadContents(),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
@@ -114,7 +116,9 @@ class Home extends GetView<HomeController> {
           return Center(
             child: Text('해당 지역에 데이터가 없습니다.'),
           );
-        });
+        },
+      ),
+    );
   }
 
   @override
@@ -123,65 +127,68 @@ class Home extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: GestureDetector(
-          onTap: () {},
-          child: PopupMenuButton<String>(
-            offset: Offset(0, 38),
-            shape: TooltipShape(),
-            onSelected: (String where) {
-              controller.changeLocation(where);
+        // TODO: 주소 클릭 시, 화살 아이콘 방향 변경
+        // Problem: PopupMenuButton 부모 위젯인 GetstureDector의 onTap 함수가 호출되지않음...
+        title: Obx(
+          () => GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              controller.handlePopupMenuArrowIcon();
             },
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(value: 'ara', child: Text('아라동')),
-                PopupMenuItem(value: 'ora', child: Text('오라동')),
-                PopupMenuItem(
-                    value: 'setting_neighborhood', child: Text('내 동네 설정하기')),
-              ];
-            },
-            child: Obx(
-              () => Row(
-                children: [
-                  Text(
-                    controller.locationTypeToString[
-                        controller.currentLocation!.value]!,
-                    style: TextStyle(
-                      color: Colors.black,
+            child: Container(
+              child: PopupMenuButton<String>(
+                offset: Offset(0, 38),
+                shape: TooltipShape(),
+                onSelected: (String where) {
+                  controller.changeLocation(where);
+                },
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PopupMenuItem(value: 'ara', child: Text('아라동')),
+                    PopupMenuItem(value: 'ora', child: Text('오라동')),
+                    PopupMenuItem(
+                      value: 'setting_neighborhood',
+                      child: Text('내 동네 설정하기'),
                     ),
-                  ),
-                  controller.openOtherLocal
-                      ? Icon(
-                          Icons.keyboard_arrow_up_rounded,
-                          color: Colors.black,
-                        )
-                      : Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          color: Colors.black,
-                        ),
-                ],
+                  ];
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      controller.locationTypeToString[
+                          controller.currentLocation.value]!,
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                    controller.openOtherLocal.value
+                        ? Icon(
+                            Icons.keyboard_arrow_up_rounded,
+                            color: Colors.black,
+                          )
+                        : Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: Colors.black,
+                          ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
         elevation: 1.0,
         actions: [
-          IconButton(
+          AppBarIcon(
+            icon: Icons.search,
             onPressed: () {
               print('상품 검색');
             },
-            icon: Icon(
-              Icons.search,
-              color: Colors.black,
-            ),
           ),
-          IconButton(
+          AppBarIcon(
+            icon: Icons.tune,
             onPressed: () {
               print('카테고리');
             },
-            icon: Icon(
-              Icons.tune,
-              color: Colors.black,
-            ),
           ),
           IconButton(
             onPressed: () {

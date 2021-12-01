@@ -7,11 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class InterestingProduct extends StatefulWidget {
-  // bool isMyFavoriteProduct;
-
   InterestingProduct({
     Key? key,
-    // required this.isMyFavoriteProduct,
   }) : super(key: key);
 
   @override
@@ -20,12 +17,22 @@ class InterestingProduct extends StatefulWidget {
 
 class _InterestingProductState extends State<InterestingProduct> {
   late ContentsRepository contentsRepository;
+  bool isMyFavoriteProduct = false;
 
   @override
   void initState() {
-    contentsRepository = ContentsRepository();
     super.initState();
+    contentsRepository = ContentsRepository();
+    // _loadMyFavoriteContentsState();
   }
+
+  // _loadMyFavoriteContentsState() async {
+  //   bool isFavoriteProduct =
+  //       await contentsRepository.isMyFavoriteProducts(widget.data!['pid']);
+  //   setState(() {
+  //     isMyFavoriteProduct = isFavoriteProduct;
+  //   });
+  // }
 
   Widget _makeDataList(List<dynamic> datas) {
     return ListView.separated(
@@ -71,25 +78,26 @@ class _InterestingProductState extends State<InterestingProduct> {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(fontSize: 15.0),
                               ),
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     // needs to refactor to remove each interesting product
-                              //     setState(() {
-                              //       widget.isMyFavoriteProduct =
-                              //           !widget.isMyFavoriteProduct;
-                              //     });
-                              //   },
-                              //   child: SvgPicture.asset(
-                              //     widget.isMyFavoriteProduct
-                              //         ? 'assets/svg/heart_on.svg'
-                              //         : 'assets/svg/heart_off.svg',
-                              //     width: 18,
-                              //     height: 18,
-                              //     color: widget.isMyFavoriteProduct
-                              //         ? Color(0xFFFF8A3D)
-                              //         : Colors.grey.shade800,
-                              //   ),
-                              // ),
+                              GestureDetector(
+                                onTap: () {
+                                  // TODO: 관심목록 페이지에서도 관심상품을 등록하고, 지울 수 있도록
+                                  setState(() {
+                                    // widget.isMyFavoriteProduct =
+                                    // !widget.isMyFavoriteProduct;
+                                  });
+                                },
+                                child: SvgPicture.asset(
+                                  // widget.isMyFavoriteProduct
+                                  // ? 'assets/svg/heart_on.svg'
+                                  // :
+                                  'assets/svg/heart_off.svg',
+                                  width: 18,
+                                  height: 18,
+                                  // color: widget.isMyFavoriteProduct
+                                  //     ? Color(0xFFFF8A3D)
+                                  //     : Colors.grey.shade800,
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(height: 5.0),
@@ -165,12 +173,19 @@ class _InterestingProductState extends State<InterestingProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          '관심목록',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        title: GestureDetector(
+          onTap: () {},
+          child: Text(
+            '관심목록',
+            style: TextStyle(
+              color: Colors.black,
+            ),
           ),
         ),
+        elevation: 1.0,
         centerTitle: true,
       ),
       body: _bodyWidget(),

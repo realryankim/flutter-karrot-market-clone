@@ -29,7 +29,7 @@ class _ProductDetailState extends State<ProductDetail> {
   late ProductDetailController _controller;
   late Animation _colorTween;
   late ContentsRepository contentsRepository;
-  late bool isMyFavoriteProduct = false;
+  bool isMyFavoriteProduct = false;
 
   @override
   void initState() {
@@ -43,7 +43,6 @@ class _ProductDetailState extends State<ProductDetail> {
   _loadMyFavoriteContentsState() async {
     bool isFavoriteProduct =
         await contentsRepository.isMyFavoriteProducts(widget.data!['pid']);
-    // setState
     setState(() {
       isMyFavoriteProduct = isFavoriteProduct;
     });
@@ -338,9 +337,7 @@ class _ProductDetailState extends State<ProductDetail> {
                         GestureDetector(
                           onTap: () {
                             Get.to(
-                              () => InterestingProduct(
-                                  // isMyFavoriteProduct: isMyFavoriteProduct,
-                                  ),
+                              () => InterestingProduct(),
                             );
                           },
                           child: Text(

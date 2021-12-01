@@ -7,18 +7,13 @@ class InterestingProductController extends GetxController {
 
   late ContentsRepository contentsRepository;
 
-  bool isMyFavoriteProduct = false;
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  RxBool isMyFavoriteProduct = false.obs;
 
   Future<List<dynamic>?> loadInterestingProducts() async {
     return await contentsRepository.loadFavoriteProducts();
   }
 
   void changeInterestingProduct(bool currentFavoriteStatus) {
-    isMyFavoriteProduct = !currentFavoriteStatus;
+    isMyFavoriteProduct(!currentFavoriteStatus);
   }
 }
