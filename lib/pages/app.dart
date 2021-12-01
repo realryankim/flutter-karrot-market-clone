@@ -49,28 +49,31 @@ class App extends GetView<AppController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx(
-        () {
-          return _bodyWidget();
-        },
-      ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: controller.currentIndex.value,
-          selectedFontSize: 12.0,
-          showSelectedLabels: true,
-          selectedItemColor: Colors.black,
-          selectedLabelStyle: TextStyle(color: Colors.black),
-          onTap: controller.changePageIndex,
-          items: [
-            _bottomNavigationBarItem('home', '홈'),
-            _bottomNavigationBarItem('notes', '동네생활'),
-            _bottomNavigationBarItem('location', '내 근처'),
-            _bottomNavigationBarItem('chat', '채팅'),
-            _bottomNavigationBarItem('user', '나의 당근'),
-          ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Obx(
+          () {
+            return _bodyWidget();
+          },
+        ),
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            currentIndex: controller.currentIndex.value,
+            selectedFontSize: 12.0,
+            showSelectedLabels: true,
+            selectedItemColor: Colors.black,
+            selectedLabelStyle: TextStyle(color: Colors.black),
+            onTap: controller.changePageIndex,
+            items: [
+              _bottomNavigationBarItem('home', '홈'),
+              _bottomNavigationBarItem('notes', '동네생활'),
+              _bottomNavigationBarItem('location', '내 근처'),
+              _bottomNavigationBarItem('chat', '채팅'),
+              _bottomNavigationBarItem('user', '나의 당근'),
+            ],
+          ),
         ),
       ),
     );
