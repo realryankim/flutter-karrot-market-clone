@@ -119,7 +119,6 @@ class MyKarrot extends StatelessWidget {
                 imageUrl: 'assets/images/heart.svg',
                 text: '관심목록',
                 onTap: () {
-                  // TODO: 관심목록 페이지로 이동
                   Get.toNamed('/interesting_product');
                 },
               ),

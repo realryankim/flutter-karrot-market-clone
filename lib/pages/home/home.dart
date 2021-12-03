@@ -18,9 +18,7 @@ class Home extends GetView<HomeController> {
           return GestureDetector(
             onTap: () {
               Get.to(
-                () => ProductDetail(
-                  data: datas[index],
-                ),
+                () => ProductDetail(data: datas[index]),
               );
             },
             child: Container(
@@ -128,50 +126,65 @@ class Home extends GetView<HomeController> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         // TODO: 주소 클릭 시, 화살 아이콘 방향 변경
-        // Problem: PopupMenuButton 부모 위젯인 GetstureDector의 onTap 함수가 호출되지않음...
+        // Problem1: PopupMenuButton 부모 위젯인 GetstureDector의 onTap 함수가 호출되지않음... (해결..?)
+        // Problem2: 1초 정도 눌러야만 화살 아이콘이 변경
         title: Obx(
           () => GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTap: () {
+            onTapDown: (detail) {
+              print('tap');
               controller.handlePopupMenuArrowIcon();
+
+              // * showMenu way... location 변경 불가능
+              print(detail.globalPosition.dx);
+              // showMenu(
+              //     context: context,
+              //     position: RelativeRect.fromLTRB(0.0, detail.globalPosition.dy,
+              //         detail.globalPosition.dx, 0.0),
+              //     items: [
+              //       PopupMenuItem(value: 'ara', child: Text('아라동')),
+              //       PopupMenuItem(value: 'ora', child: Text('오라동')),
+              //       PopupMenuItem(
+              //         value: 'setting_neighborhood',
+              //         child: Text('내 동네 설정하기'),
+              //       ),
+              //     ]);
             },
-            child: Container(
-              child: PopupMenuButton<String>(
-                offset: Offset(0, 38),
-                shape: TooltipShape(),
-                onSelected: (String where) {
-                  controller.changeLocation(where);
-                },
-                itemBuilder: (BuildContext context) {
-                  return [
-                    PopupMenuItem(value: 'ara', child: Text('아라동')),
-                    PopupMenuItem(value: 'ora', child: Text('오라동')),
-                    PopupMenuItem(
-                      value: 'setting_neighborhood',
-                      child: Text('내 동네 설정하기'),
+            child: PopupMenuButton<String>(
+              offset: Offset(0, 38),
+              shape: TooltipShape(),
+              onSelected: (String where) {
+                controller.changeLocation(where);
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(value: 'ara', child: Text('아라동')),
+                  PopupMenuItem(value: 'ora', child: Text('오라동')),
+                  PopupMenuItem(
+                    value: 'setting_neighborhood',
+                    child: Text('내 동네 설정하기'),
+                  ),
+                ];
+              },
+              child: Row(
+                children: [
+                  Text(
+                    controller.locationTypeToString[
+                        controller.currentLocation.value]!,
+                    style: TextStyle(
+                      color: Colors.black,
                     ),
-                  ];
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      controller.locationTypeToString[
-                          controller.currentLocation.value]!,
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                    controller.openOtherLocal.value
-                        ? Icon(
-                            Icons.keyboard_arrow_up_rounded,
-                            color: Colors.black,
-                          )
-                        : Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            color: Colors.black,
-                          ),
-                  ],
-                ),
+                  ),
+                  controller.openOtherLocal.value
+                      ? Icon(
+                          Icons.keyboard_arrow_up_rounded,
+                          color: Colors.black,
+                        )
+                      : Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: Colors.black,
+                        ),
+                ],
               ),
             ),
           ),

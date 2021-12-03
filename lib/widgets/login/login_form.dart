@@ -13,8 +13,6 @@ class LoginForm extends GetView<LoginController> {
         horizontal: 20.0,
         vertical: 10.0,
       ),
-      // TODO: 이메일, 비밀번호가 잘못 입력되면, 텍스트가 사라지고,
-      // 텍스트 폼이 위로 올라가도록?
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

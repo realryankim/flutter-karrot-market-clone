@@ -11,6 +11,8 @@ class ProductDetailController extends GetxController
   RxDouble scrollPositionToAlpha = 0.0.obs;
   late AnimationController _animationController;
   late Animation colorTween;
+  //
+  RxBool isMyFavoriteProduct = false.obs;
 
   @override
   void onInit() {

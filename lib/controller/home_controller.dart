@@ -21,7 +21,6 @@ class HomeController extends GetxController {
   }
 
   void changeLocation(String location) {
-    print(location);
     currentLocation(location);
   }
 

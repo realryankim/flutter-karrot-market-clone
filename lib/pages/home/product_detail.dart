@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_market_clone/components/manner_temperature.dart';
 import 'package:carrot_market_clone/components/other_selling_content_list.dart';
-import 'package:carrot_market_clone/controller/interesting_product_controller.dart';
 import 'package:carrot_market_clone/controller/product_detail_controller.dart';
 import 'package:carrot_market_clone/pages/my_karrot/interesting_product.dart';
 import 'package:carrot_market_clone/repository/contents_repository.dart';
@@ -20,16 +19,14 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
-  late double width;
-  late double height;
+  late double width = Get.width;
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
+  late ProductDetailController _controller;
   late List<String> imgList;
   late int _current;
-  late ProductDetailController _controller;
   late Animation _colorTween;
   late ContentsRepository contentsRepository;
-  bool isMyFavoriteProduct = false;
 
   @override
   void initState() {
@@ -44,13 +41,12 @@ class _ProductDetailState extends State<ProductDetail> {
     bool isFavoriteProduct =
         await contentsRepository.isMyFavoriteProducts(widget.data!['pid']);
     setState(() {
-      isMyFavoriteProduct = isFavoriteProduct;
+      _controller.isMyFavoriteProduct.value = isFavoriteProduct;
     });
   }
 
   @override
   void didChangeDependencies() {
-    width = Get.width;
     imgList = [
       widget.data!['image'],
       widget.data!['image'],
@@ -95,8 +91,6 @@ class _ProductDetailState extends State<ProductDetail> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: imgList.asMap().entries.map((entry) {
-                // print(entry.key);
-                // print(Theme.of(context).brightness);
                 return GestureDetector(
                   child: Container(
                     width: 10,
@@ -308,7 +302,7 @@ class _ProductDetailState extends State<ProductDetail> {
         children: [
           GestureDetector(
             onTap: () async {
-              if (isMyFavoriteProduct) {
+              if (_controller.isMyFavoriteProduct.value) {
                 await contentsRepository
                     .deleteMyFavoriteProduct(widget.data!['pid']);
               } else {
@@ -316,10 +310,11 @@ class _ProductDetailState extends State<ProductDetail> {
               }
 
               setState(() {
-                isMyFavoriteProduct = !isMyFavoriteProduct;
+                _controller.isMyFavoriteProduct.value =
+                    !_controller.isMyFavoriteProduct.value;
               });
 
-              if (isMyFavoriteProduct) {
+              if (_controller.isMyFavoriteProduct.value) {
                 scaffoldMessengerKey.currentState?.showSnackBar(
                   SnackBar(
                     behavior: SnackBarBehavior.floating,
@@ -356,12 +351,12 @@ class _ProductDetailState extends State<ProductDetail> {
               }
             },
             child: SvgPicture.asset(
-              isMyFavoriteProduct
+              _controller.isMyFavoriteProduct.value
                   ? 'assets/svg/heart_on.svg'
                   : 'assets/svg/heart_off.svg',
               width: 18,
               height: 18,
-              color: isMyFavoriteProduct
+              color: _controller.isMyFavoriteProduct.value
                   ? Color(0xFFFF8A3D)
                   : Colors.grey.shade800,
             ),
@@ -426,12 +421,11 @@ class _ProductDetailState extends State<ProductDetail> {
 
   @override
   Widget build(BuildContext context) {
-    // Get.put(InterestingProductController());
     return Obx(
       () => ScaffoldMessenger(
         key: scaffoldMessengerKey,
         child: Scaffold(
-          extendBodyBehindAppBar: true,
+          extendBodyBehindAppBar: true, // body를 appBar 영역까지 확장
           appBar: AppBar(
             // withAlpha(0~255)
             backgroundColor: Colors.white

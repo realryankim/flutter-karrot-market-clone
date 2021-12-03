@@ -1,7 +1,6 @@
 import 'package:carrot_market_clone/repository/contents_repository.dart';
 import 'package:get/get.dart';
 
-// working on
 class InterestingProductController extends GetxController {
   static InterestingProductController get to => Get.find();
 

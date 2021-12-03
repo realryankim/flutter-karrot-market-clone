@@ -1,4 +1,3 @@
-import 'package:carrot_market_clone/controller/interesting_product_controller.dart';
 import 'package:carrot_market_clone/pages/home/product_detail.dart';
 import 'package:carrot_market_clone/repository/contents_repository.dart';
 import 'package:carrot_market_clone/utils/data_utils.dart';
@@ -23,16 +22,7 @@ class _InterestingProductState extends State<InterestingProduct> {
   void initState() {
     super.initState();
     contentsRepository = ContentsRepository();
-    // _loadMyFavoriteContentsState();
   }
-
-  // _loadMyFavoriteContentsState() async {
-  //   bool isFavoriteProduct =
-  //       await contentsRepository.isMyFavoriteProducts(widget.data!['pid']);
-  //   setState(() {
-  //     isMyFavoriteProduct = isFavoriteProduct;
-  //   });
-  // }
 
   Widget _makeDataList(List<dynamic> datas) {
     return ListView.separated(
@@ -73,29 +63,22 @@ class _InterestingProductState extends State<InterestingProduct> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                datas[index]['title'],
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 15.0),
+                              Expanded(
+                                flex: 12,
+                                child: Text(
+                                  datas[index]['title'],
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 15.0),
+                                ),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  // TODO: 관심목록 페이지에서도 관심상품을 등록하고, 지울 수 있도록
-                                  setState(() {
-                                    // widget.isMyFavoriteProduct =
-                                    // !widget.isMyFavoriteProduct;
-                                  });
-                                },
-                                child: SvgPicture.asset(
-                                  // widget.isMyFavoriteProduct
-                                  // ? 'assets/svg/heart_on.svg'
-                                  // :
-                                  'assets/svg/heart_off.svg',
-                                  width: 18,
-                                  height: 18,
-                                  // color: widget.isMyFavoriteProduct
-                                  //     ? Color(0xFFFF8A3D)
-                                  //     : Colors.grey.shade800,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: SvgPicture.asset(
+                                    'assets/svg/heart_off.svg',
+                                    width: 18,
+                                    height: 18,
+                                  ),
                                 ),
                               ),
                             ],
@@ -156,7 +139,7 @@ class _InterestingProductState extends State<InterestingProduct> {
             return Center(child: Text('데이터 오류'));
           }
           if (snapshot.hasData) {
-            // AsyncSnapshot<Object?>을 List<Map<String, dynamic>>로 형변환
+            // AsyncSnapshot<Object?>을 List<dynamic>으로 형변환
             return _makeDataList(snapshot.data as List<dynamic>);
           }
           return Center(

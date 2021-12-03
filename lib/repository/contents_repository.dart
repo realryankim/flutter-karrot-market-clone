@@ -8,7 +8,6 @@ class ContentsRepository extends LocalStorageRepository {
   Map<String, dynamic> data = {
     "ara": [
       {
-        // pid: products id
         "pid": "1",
         "image": "assets/images/ara-1.jpg",
         "title": "네메시스 축구화275",
