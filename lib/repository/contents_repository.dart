@@ -179,6 +179,7 @@ class ContentsRepository extends LocalStorageRepository {
     return data[location];
   }
 
+  // 관심상품 불러오기
   Future<List<dynamic>?> loadFavoriteProducts() async {
     String? jsonString = await this.getStoredValue(MY_FAVORITE_STORE_KEY);
     if (jsonString != null) {
@@ -189,6 +190,7 @@ class ContentsRepository extends LocalStorageRepository {
     }
   }
 
+  // 관심상품 추가
   addMyFavoriteProduct(Map<String, dynamic> product) async {
     List<dynamic>? favoriteProductList = await loadFavoriteProducts();
     if (favoriteProductList == null || !(favoriteProductList is List)) {
@@ -204,6 +206,7 @@ class ContentsRepository extends LocalStorageRepository {
         .storeValue(MY_FAVORITE_STORE_KEY, jsonEncode(favoriteProductList));
   }
 
+  // 관심상품 제거
   deleteMyFavoriteProduct(String pid) async {
     List<dynamic>? favoriteProductList = await loadFavoriteProducts();
     if (favoriteProductList != null && favoriteProductList is List) {

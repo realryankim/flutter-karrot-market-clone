@@ -1,4 +1,5 @@
 import 'package:carrot_market_clone/controller/app_controller.dart';
+import 'package:carrot_market_clone/widgets/my_karrot/my_karrot_list_view.dart';
 import 'package:carrot_market_clone/widgets/my_karrot/user_items.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -132,7 +133,7 @@ class MyKarrot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: GestureDetector(
@@ -165,14 +166,12 @@ class MyKarrot extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              _profile(),
-              SizedBox(height: 10.0),
-              // TODO: 나의 당근 리스트뷰
-            ],
-          ),
+        child: Column(
+          children: [
+            _profile(),
+            SizedBox(height: 10.0),
+            MyKarrotListView(),
+          ],
         ),
       ),
     );
