@@ -7,8 +7,8 @@ class AppBarIcon extends StatelessWidget {
     required this.onPressed,
   }) : super(key: key);
 
-  IconData icon;
-  void Function() onPressed;
+  final IconData icon;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_market_clone/components/manner_temperature.dart';
 import 'package:carrot_market_clone/components/other_selling_content_list.dart';
 import 'package:carrot_market_clone/controller/product_detail_controller.dart';
+import 'package:carrot_market_clone/controller/product_detail_scroll_controller.dart';
 import 'package:carrot_market_clone/pages/my_karrot/interesting_product.dart';
 import 'package:carrot_market_clone/repository/contents_repository.dart';
 import 'package:carrot_market_clone/utils/data_utils.dart';
@@ -10,29 +11,32 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ProductDetail extends StatefulWidget {
-  ProductDetail({Key? key, this.data}) : super(key: key);
+  ProductDetail({
+    Key? key,
+    this.data,
+  }) : super(key: key);
 
-  Map<String, dynamic>? data;
+  final Map<String, dynamic>? data;
 
   @override
   _ProductDetailState createState() => _ProductDetailState();
 }
 
 class _ProductDetailState extends State<ProductDetail> {
-  late double width = Get.width;
-  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-      GlobalKey<ScaffoldMessengerState>();
-  late ProductDetailController _controller;
+  double width = Get.width;
+
+  late ProductDetailScrollController _productDetailScrollController;
+  late ProductDetailController _productDetailController;
   late List<String> imgList;
   late int _current;
-  late Animation _colorTween;
   late ContentsRepository contentsRepository;
 
   @override
   void initState() {
     super.initState();
-    _controller = Get.put(ProductDetailController());
-    _colorTween = _controller.colorTween;
+    _productDetailScrollController = Get.put(ProductDetailScrollController());
+    _productDetailController = Get.put(ProductDetailController());
+
     contentsRepository = ContentsRepository();
     _loadMyFavoriteContentsState();
   }
@@ -41,7 +45,7 @@ class _ProductDetailState extends State<ProductDetail> {
     bool isFavoriteProduct =
         await contentsRepository.isMyFavoriteProducts(widget.data!['pid']);
     setState(() {
-      _controller.isMyFavoriteProduct.value = isFavoriteProduct;
+      _productDetailController.isMyFavoriteProduct.value = isFavoriteProduct;
     });
   }
 
@@ -267,7 +271,7 @@ class _ProductDetailState extends State<ProductDetail> {
 
   Widget _bodyWidget() {
     return CustomScrollView(
-      controller: _controller.scrollController,
+      controller: _productDetailScrollController.scrollController,
       slivers: [
         SliverList(
           delegate: SliverChildListDelegate(
@@ -302,7 +306,7 @@ class _ProductDetailState extends State<ProductDetail> {
         children: [
           GestureDetector(
             onTap: () async {
-              if (_controller.isMyFavoriteProduct.value) {
+              if (_productDetailController.isMyFavoriteProduct.value) {
                 await contentsRepository
                     .deleteMyFavoriteProduct(widget.data!['pid']);
               } else {
@@ -310,12 +314,13 @@ class _ProductDetailState extends State<ProductDetail> {
               }
 
               setState(() {
-                _controller.isMyFavoriteProduct.value =
-                    !_controller.isMyFavoriteProduct.value;
+                _productDetailController.isMyFavoriteProduct.value =
+                    !_productDetailController.isMyFavoriteProduct.value;
               });
 
-              if (_controller.isMyFavoriteProduct.value) {
-                scaffoldMessengerKey.currentState?.showSnackBar(
+              if (_productDetailController.isMyFavoriteProduct.value) {
+                _productDetailController.scaffoldMessengerKey.currentState
+                    ?.showSnackBar(
                   SnackBar(
                     behavior: SnackBarBehavior.floating,
                     margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 20.0),
@@ -351,12 +356,12 @@ class _ProductDetailState extends State<ProductDetail> {
               }
             },
             child: SvgPicture.asset(
-              _controller.isMyFavoriteProduct.value
+              _productDetailController.isMyFavoriteProduct.value
                   ? 'assets/svg/heart_on.svg'
                   : 'assets/svg/heart_off.svg',
               width: 18,
               height: 18,
-              color: _controller.isMyFavoriteProduct.value
+              color: _productDetailController.isMyFavoriteProduct.value
                   ? Color(0xFFFF8A3D)
                   : Colors.grey.shade800,
             ),
@@ -411,10 +416,10 @@ class _ProductDetailState extends State<ProductDetail> {
 
   Widget _makeIcon(IconData icon) {
     return AnimatedBuilder(
-      animation: _colorTween,
+      animation: _productDetailScrollController.colorTween,
       builder: (context, child) => Icon(
         icon,
-        color: _colorTween.value,
+        color: _productDetailScrollController.colorTween.value,
       ),
     );
   }
@@ -423,13 +428,13 @@ class _ProductDetailState extends State<ProductDetail> {
   Widget build(BuildContext context) {
     return Obx(
       () => ScaffoldMessenger(
-        key: scaffoldMessengerKey,
+        key: _productDetailController.scaffoldMessengerKey,
         child: Scaffold(
           extendBodyBehindAppBar: true, // body를 appBar 영역까지 확장
           appBar: AppBar(
             // withAlpha(0~255)
-            backgroundColor: Colors.white
-                .withAlpha(_controller.scrollPositionToAlpha.toInt()),
+            backgroundColor: Colors.white.withAlpha(
+                _productDetailScrollController.scrollPositionToAlpha.toInt()),
             elevation: 0,
             leading: IconButton(
                 onPressed: () {

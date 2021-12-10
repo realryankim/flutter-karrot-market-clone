@@ -108,7 +108,7 @@ class Home extends GetView<HomeController> {
             return Center(child: Text('데이터 오류'));
           }
           if (snapshot.hasData) {
-            // AsyncSnapshot<Object?>을 List<Map<String, dynamic>>로 형변환
+            // as를 사용해서 AsyncSnapshot<Object?>를 List<Map<String, dynamic>>로 형변환
             return _makeDataList(snapshot.data as List<Map<String, dynamic>>);
           }
           return Center(
@@ -125,30 +125,12 @@ class Home extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        // TODO: 주소 클릭 시, 화살 아이콘 방향 변경
-        // Problem1: PopupMenuButton 부모 위젯인 GetstureDector의 onTap 함수가 호출되지않음... (해결..?)
-        // Problem2: 1초 정도 눌러야만 화살 아이콘이 변경
         title: Obx(
           () => GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTapDown: (detail) {
-              print('tap');
+            onTap: () {
+              // TODO: 주소 클릭 시, 화살 아이콘 방향 변경
               controller.handlePopupMenuArrowIcon();
-
-              // * showMenu way... location 변경 불가능
-              print(detail.globalPosition.dx);
-              // showMenu(
-              //     context: context,
-              //     position: RelativeRect.fromLTRB(0.0, detail.globalPosition.dy,
-              //         detail.globalPosition.dx, 0.0),
-              //     items: [
-              //       PopupMenuItem(value: 'ara', child: Text('아라동')),
-              //       PopupMenuItem(value: 'ora', child: Text('오라동')),
-              //       PopupMenuItem(
-              //         value: 'setting_neighborhood',
-              //         child: Text('내 동네 설정하기'),
-              //       ),
-              //     ]);
             },
             child: PopupMenuButton<String>(
               offset: Offset(0, 38),
@@ -194,18 +176,18 @@ class Home extends GetView<HomeController> {
           AppBarIcon(
             icon: Icons.search,
             onPressed: () {
-              print('상품 검색');
+              // 상품 검색
             },
           ),
           AppBarIcon(
             icon: Icons.tune,
             onPressed: () {
-              print('카테고리');
+              // 카테고리
             },
           ),
           IconButton(
             onPressed: () {
-              print('알림');
+              // 알림
             },
             icon: SvgPicture.asset(
               'assets/svg/bell.svg',

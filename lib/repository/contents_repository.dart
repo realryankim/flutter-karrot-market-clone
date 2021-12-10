@@ -172,6 +172,7 @@ class ContentsRepository extends LocalStorageRepository {
     ]
   };
 
+  // 지역 상품 불러오기
   Future<List<Map<String, dynamic>>> loadContentsFromLocation(
       String location) async {
     // API 통신 대신, mock 데이터 사용
@@ -191,7 +192,7 @@ class ContentsRepository extends LocalStorageRepository {
   }
 
   // 관심상품 추가
-  addMyFavoriteProduct(Map<String, dynamic> product) async {
+  Future<void> addMyFavoriteProduct(Map<String, dynamic> product) async {
     List<dynamic>? favoriteProductList = await loadFavoriteProducts();
     if (favoriteProductList == null || !(favoriteProductList is List)) {
       favoriteProductList = [product];
@@ -201,13 +202,13 @@ class ContentsRepository extends LocalStorageRepository {
     updatedFavoriteProduct(favoriteProductList);
   }
 
-  void updatedFavoriteProduct(List favoriteProductList) async {
+  Future<void> updatedFavoriteProduct(List favoriteProductList) async {
     await this
         .storeValue(MY_FAVORITE_STORE_KEY, jsonEncode(favoriteProductList));
   }
 
   // 관심상품 제거
-  deleteMyFavoriteProduct(String pid) async {
+  Future<void> deleteMyFavoriteProduct(String pid) async {
     List<dynamic>? favoriteProductList = await loadFavoriteProducts();
     if (favoriteProductList != null && favoriteProductList is List) {
       favoriteProductList.removeWhere((data) => data['pid'] == pid);
@@ -215,7 +216,7 @@ class ContentsRepository extends LocalStorageRepository {
     updatedFavoriteProduct(favoriteProductList!);
   }
 
-  isMyFavoriteProducts(String pid) async {
+  Future<bool> isMyFavoriteProducts(String pid) async {
     bool isMyFavoriteProducts = false;
     List<dynamic>? json = await loadFavoriteProducts();
     if (json == null || !(json is List)) {
