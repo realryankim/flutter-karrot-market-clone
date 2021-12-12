@@ -83,6 +83,9 @@ class SignUpController extends GetxController {
       if (newUser.user != null) {
         // 회원가입 성공 => app 페이지로 이동
         Get.toNamed('/app');
+        userEmail('');
+        userName('');
+        userPassword('');
       }
     } catch (error) {
       print(error);

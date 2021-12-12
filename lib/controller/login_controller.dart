@@ -67,6 +67,8 @@ class LoginController extends GetxController {
       if (newUser.user != null) {
         // 로그인 성공 => app 페이지로 이동
         Get.toNamed('/app');
+        userEmail('');
+        userPassword('');
       }
     } catch (error) {
       print(error);
